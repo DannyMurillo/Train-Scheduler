@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>Train Tracker</title>
+
+  <!-- jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- Bootstrap CDN-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- Firebase Reference -->
+  <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <br>
+
+    <!-- Jumbotron Title -->
+    <div class="jumbotron" style="background-color:rgb(85, 46, 46); color:white">
+      <h1 class="text-center">Anytime is Train Time </h1>
+      <h3 class="text-center">Choo Choo. Chee Chee.</h3>
+    </div>
+
+    <!--  -->
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Current Train Schedule</h3>
+            </div> 
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Train Name</th>
+                      <th>Destination</th>
+                      <th>Frequency (min)</th>
+                      <th>Next Arrival</th>
+                      <th>Minutes Away</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Insert info here  rows here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Make Your Bid -->
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Add Train</h3>
+          </div>
+          <div class="panel-body">
+            <form>
+              <div class="form-group">
+                <label for="train-name">Train Name </label>
+                <input class="form-control" id="epmployee-name" type="text">
+              </div>
+              <div class="form-group">
+                <label for="destination">Destination</label>
+                <input class="form-control" id="role" type="text">
+              </div>
+              <div class="form-group">
+                <label for="ftt">First Train Time (HH:mm - military time)</label>
+                <input class="form-control" id="start-date" type="text">
+              </div>
+              <div class="form-group">
+                <label for="frequency">Frequency (min)</label>
+                <input class="form-control" id="monthly-rate" type="text">
+              </div>
+              <button class="btn btn-primary" id="submit-train" type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Script -->
+<script>
+    // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyA-ddI85Vg3c_oMgCltoQ0KC4f3BzaEkZ8",
+    authDomain: "cbc-projcet-1.firebaseapp.com",
+    databaseURL: "https://cbc-projcet-1.firebaseio.com",
+    projectId: "cbc-projcet-1",
+    storageBucket: "cbc-projcet-1.appspot.com",
+    messagingSenderId: "618804188958"
+  };
+  firebase.initializeApp(config);
+</script>
+
+</body>
+
+</html>
