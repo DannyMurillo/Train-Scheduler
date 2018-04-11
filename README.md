@@ -6,3 +6,5 @@ This is all possible by linking the webpage to a firebase server that stores and
 
 -- The webpage can be found here: https://dannymurillo.github.io/Train-Scheduler/
 
+keep getting error traindata not defined 
+firebase connection is not working 

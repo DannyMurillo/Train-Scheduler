@@ -27,7 +27,7 @@
       <h3 class="text-center">Choo Choo. Chee Chee.</h3>
     </div>
 
-    <!--  -->
+    <!-- Current Trains -->
     <div class="row">
       <div class="col-lg-12">
         <div class="panel panel-primary">
@@ -69,21 +69,21 @@
             <form>
               <div class="form-group">
                 <label for="train-name">Train Name </label>
-                <input class="form-control" id="epmployee-name" type="text">
+                <input class="form-control" id="trainNameInput" type="text">
               </div>
               <div class="form-group">
                 <label for="destination">Destination</label>
-                <input class="form-control" id="role" type="text">
+                <input class="form-control" id="destinationInput" type="text">
               </div>
               <div class="form-group">
                 <label for="ftt">First Train Time (HH:mm - military time)</label>
-                <input class="form-control" id="start-date" type="text">
+                <input class="form-control" id="fttInput" type="text">
               </div>
               <div class="form-group">
                 <label for="frequency">Frequency (min)</label>
-                <input class="form-control" id="monthly-rate" type="text">
+                <input class="form-control" id="frequencyInput" type="text">
               </div>
-              <button class="btn btn-primary" id="submit-train" type="submit">Submit</button>
+              <button class="btn btn-primary" id="addTrainBtn" type="submit">Submit</button>
             </form>
           </div>
         </div>
@@ -104,6 +104,80 @@
     messagingSenderId: "618804188958"
   };
   firebase.initializeApp(config);
+
+  // created a variable to reference the database 
+  
+
+  $(document).ready(function(){
+	// 1. Link to Firebase
+	var database = firebase.database();
+
+	// 2. Adding trains
+$("#addTrainBtn").on("click", function(){
+
+		// Grabs user input and assign to variables
+		var trainName = $("#trainNameInput").val().trim();
+		var destination = $("#destinationInput").val().trim();
+		var ftt = moment($("#fttInput").val().trim(), "HH:mm").subtract(10, "years").format("X");;
+		var frequencyInput = $("#frequencyInput").val().trim();
+
+		// Test for variables entered
+		console.log(trainName);
+		console.log(destination);
+		console.log(ftt);
+		console.log(frequencyInput);
+
+		// Creates local "temporary" object for holding train data
+		// Will push this to firebase
+		var newTrain = {
+			name:  trainName,
+			destination: destination,
+			trainTime: ftt,
+			frequency: frequencyInput,
+		}
+
+		// pushing trainInfo to Firebase
+		trainData.push(newTrain);
+
+		// clear text-boxes
+		$("#trainNameInput").val("");
+		$("#destinationInput").val("");
+		$("#trainInput").val("");
+		$("#frequencyInput").val("");
+
+		// Prevents page from refreshing
+		return false;
+	});
+
+	trainData.on("child_added", function(childSnapshot, prevChildKey){
+
+		console.log(childSnapshot.val());
+
+		// assign firebase variables to snapshots.
+		var firebaseName = childSnapshot.val().name;
+		var firebaseDestination = childSnapshot.val().destination;
+		var firebaseftt = childSnapshot.val().trainTime;
+		var firebaseFrequency = childSnapshot.val().frequency;
+		
+		var diffTime = moment().diff(moment.unix(firebaseftt), "minutes");
+		var timeRemainder = moment().diff(moment.unix(firebaseftt), "minutes") % firebaseFrequency ;
+		var minutes = firebaseFrequency - timeRemainder;
+
+		var nextTrainArrival = moment().add(minutes, "m").format("hh:mm A"); 
+		
+		// Test for correct times and info
+		console.log(minutes);
+		console.log(nextTrainArrival);
+		console.log(moment().format("hh:mm A"));
+		console.log(nextTrainArrival);
+		console.log(moment().format("X"));
+
+		// Append train info to table on page
+		$("#trainTable > tbody").append("<tr><td>" + firebaseName + "</td><td>" + firebaseLine + "</td><td>"+ firebaseDestination + "</td><td>" + firebaseFrequency + " mins" + "</td><td>" + nextTrainArrival + "</td><td>" + minutes + "</td></tr>");
+
+	});
+});
+
 </script>
 
 </body>
